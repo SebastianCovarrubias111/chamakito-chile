@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CHAMAKITO - Edición Chile</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap');
 
         :root {
             --cl-blue: #0039a6;
@@ -13,7 +13,8 @@
             --cl-white: #ffffff;
             --dark-bg: #0b0d12;
             --card-bg: #141824;
-            --text-color: #e2e8f0;
+            --text-color: #cbd5e1;
+            --accent-gold: #f59e0b;
         }
 
         * {
@@ -27,26 +28,25 @@
             background-color: var(--dark-bg);
             color: var(--text-color);
             overflow-x: hidden;
-            line-height: 1.6;
-            /* Detalle discreto: patrón geométrico con tonos patrios oscurecidos */
-            background-image: radial-gradient(rgba(0, 57, 166, 0.15) 15%, transparent 16%),
-                              radial-gradient(rgba(213, 43, 30, 0.15) 15%, transparent 16%);
+            line-height: 1.7;
+            background-image: radial-gradient(rgba(0, 57, 166, 0.12) 15%, transparent 16%),
+                              radial-gradient(rgba(213, 43, 30, 0.12) 15%, transparent 16%);
             background-size: 30px 30px;
             background-position: 0 0, 15px 15px;
         }
 
-        /* NAVEGACIÓN DISCRETA */
+        /* BARRA DE NAVEGACIÓN */
         nav {
             position: sticky;
             top: 0;
             z-index: 100;
             background-color: rgba(11, 13, 18, 0.95);
             border-bottom: 3px solid var(--cl-red);
-            padding: 15px 20px;
+            padding: 15px 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(10px);
         }
 
         .nav-logo {
@@ -68,50 +68,56 @@
         /* HEADER */
         header {
             text-align: center;
-            padding: 50px 20px 30px;
-            max-width: 800px;
+            padding: 60px 20px 40px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
         header h1 {
-            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            font-size: clamp(2.3rem, 5.5vw, 3.8rem);
             font-weight: 900;
             color: var(--cl-white);
-            margin-bottom: 10px;
-            letter-spacing: 1px;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
             text-transform: uppercase;
         }
 
         .chile-bar {
-            width: 80px;
+            width: 90px;
             height: 4px;
             background: linear-gradient(90deg, var(--cl-blue) 50%, var(--cl-red) 50%);
             margin: 0 auto 20px;
             border-radius: 2px;
         }
 
-        /* CONTENEDOR PRINCIPAL */
+        header p {
+            font-size: clamp(0.95rem, 2vw, 1.1rem);
+            color: #94a3b8;
+        }
+
+        /* CONTENEDOR DE TARJETAS */
         .gallery-container {
-            max-width: 850px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 0 20px 60px;
             display: flex;
             flex-direction: column;
-            gap: 50px;
+            gap: 55px;
         }
 
-        /* TARJETA CON ANIMACIÓN SCROLL REVEAL */
+        /* TARJETA INTERACTIVA */
         .photo-card {
             background-color: var(--card-bg);
-            border: 2px solid rgba(255, 255, 255, 0.08);
-            border-left: 4px solid var(--cl-blue);
-            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-left: 5px solid var(--cl-blue);
+            border-radius: 14px;
             overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
             opacity: 0;
             transform: translateY(50px);
             transition: opacity 0.7s cubic-bezier(0.165, 0.84, 0.44, 1),
-                        transform 0.7s cubic-bezier(0.165, 0.84, 0.44, 1);
+                        transform 0.7s cubic-bezier(0.165, 0.84, 0.44, 1),
+                        border-color 0.3s ease;
         }
 
         .photo-card.show {
@@ -121,56 +127,93 @@
 
         .photo-card:hover {
             border-left-color: var(--cl-red);
-            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(213, 43, 30, 0.15);
         }
 
+        /* IMAGEN CLIQUEABLE CON INDICADOR DE ZOOM */
         .img-wrapper {
+            position: relative;
             width: 100%;
-            max-height: 480px;
+            height: 420px;
             background-color: #050608;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
+            cursor: pointer;
         }
 
         .img-wrapper img {
             width: 100%;
             height: 100%;
-            object-fit: contain;
+            object-fit: cover;
             display: block;
-            transition: transform 0.5s ease;
+            transition: transform 0.5s ease, filter 0.3s ease;
         }
 
-        .photo-card:hover .img-wrapper img {
-            transform: scale(1.02);
+        .img-wrapper:hover img {
+            transform: scale(1.04);
+            filter: brightness(1.05);
+        }
+
+        /* BADGE FLOTANTE DE 'CLIC PARA AMPLIAR' */
+        .zoom-hint {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            background-color: rgba(11, 13, 18, 0.85);
+            color: var(--cl-white);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            pointer-events: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .img-wrapper:hover .zoom-hint {
+            background-color: var(--cl-red);
         }
 
         .card-body {
-            padding: 25px;
+            padding: 28px;
         }
 
         .card-tag {
-            font-size: 0.8rem;
-            font-weight: 700;
+            font-size: 0.85rem;
+            font-weight: 900;
             color: var(--cl-blue);
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 8px;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            display: inline-block;
+            background: rgba(0, 57, 166, 0.12);
+            padding: 4px 12px;
+            border-radius: 6px;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: var(--cl-white);
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
         }
 
         .description {
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: var(--cl-white);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 1.02rem;
+            color: var(--text-color);
+            line-height: 1.7;
+            font-weight: 400;
         }
 
-        /* SECCIÓN DE VIDEO SHORT AL FINAL */
+        /* SECCIÓN DEL VIDEO */
         .video-section {
-            max-width: 850px;
-            margin: 20px auto 80px;
+            max-width: 900px;
+            margin: 20px auto 90px;
             padding: 0 20px;
             text-align: center;
             opacity: 0;
@@ -184,29 +227,31 @@
         }
 
         .video-section h2 {
-            font-size: 1.8rem;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 900;
             color: var(--cl-white);
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.5);
         }
 
-        /* DISEÑO RESPONSIVO PARA YOUTUBE SHORTS (FORMATO VERTICAL 9:16) */
         .video-wrapper {
             position: relative;
-            max-width: 360px; /* Ancho optimizado para el formato Short */
+            max-width: 360px;
             margin: 0 auto;
-            border-radius: 16px;
+            border-radius: 18px;
             overflow: hidden;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-bottom: 4px solid var(--cl-red);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            border-bottom: 5px solid var(--cl-red);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
             background-color: #000;
         }
 
         .video-container {
             position: relative;
             width: 100%;
-            padding-bottom: 177.78%; /* Proporción vertical 9:16 */
+            padding-bottom: 177.78%; /* Proporción 9:16 para YouTube Shorts */
             height: 0;
         }
 
@@ -219,14 +264,72 @@
             border: none;
         }
 
+        /* MODAL / VISOR DE IMÁGENES EN PANTALLA COMPLETA */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(5, 6, 8, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-content {
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .modal-img {
+            max-width: 100%;
+            max-height: 75vh;
+            object-fit: contain; /* Muestra la imagen entera sin recortar */
+            border-radius: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-title {
+            margin-top: 15px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--cl-white);
+            text-align: center;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -45px;
+            right: 0;
+            color: var(--cl-white);
+            font-size: 2.2rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--cl-red);
+        }
+
         /* FOOTER */
         footer {
             background-color: #060709;
-            border-top: 2px solid rgba(255, 255, 255, 0.05);
-            padding: 30px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 35px 20px;
             text-align: center;
-            font-size: 0.85rem;
-            color: #666;
+            font-size: 0.9rem;
+            color: #64748b;
         }
 
         footer strong {
@@ -235,13 +338,13 @@
 
         @media (max-width: 600px) {
             .card-body {
-                padding: 18px;
+                padding: 20px;
             }
-            .description {
-                font-size: 0.95rem;
+            .img-wrapper {
+                height: 300px;
             }
             .video-wrapper {
-                max-width: 100%; /* En móviles ocupa el ancho disponible */
+                max-width: 100%;
             }
         }
     </style>
@@ -255,75 +358,96 @@
     <header>
         <h1>GALERÍA CHAMAKITO</h1>
         <div class="chile-bar"></div>
+        <p>Haz clic sobre cualquiera de las imágenes para verla en pantalla completa.</p>
     </header>
 
     <main class="gallery-container">
 
         <!-- FOTO 1 -->
         <article class="photo-card">
-            <div class="img-wrapper">
-                <img src="chamakito-1.jpg" alt="Foto 1" onerror="this.src='https://via.placeholder.com/800x500/141824/ffffff?text=chamakito-1.jpg'">
+            <div class="img-wrapper" onclick="openModal('chamakito-1.jpg', '1. El Trapero del Pasaje')">
+                <img src="chamakito-1.jpg" alt="El Trapero del Pasaje" onerror="this.src='https://via.placeholder.com/800x500/141824/ffffff?text=chamakito-1.jpg'">
+                <span class="zoom-hint">🔍 VER COMPLETA</span>
             </div>
             <div class="card-body">
-                <div class="card-tag">FOTO #01</div>
-                <div class="description">INSERTAR DESCRIPCIONES</div>
+                <div class="card-tag">EXPEDIENTE #01</div>
+                <h2 class="card-title">El Trapero del Pasaje</h2>
+                <p class="description">
+                    Anda con un polerón tres tallas más grande que compró en la feria, zapatillas con la caña abierta y el corte de pelo con la raya tan marcada que parece que se la hicieron con un serrucho. No habla, solo tira un "¡Brrr!" cada tres palabras para tapar que se le olvida lo que iba a decir. Anda todo el día con un parlante bluetooth chico sonando a todo volumen en el bolsillo del pantalón, metiendo metequeque en el microbús hasta para ir a comprar dos panes marraqueta a la esquina.
+                </p>
             </div>
         </article>
 
         <!-- FOTO 2 -->
         <article class="photo-card">
-            <div class="img-wrapper">
-                <img src="chamakito-2.jpg" alt="Foto 2" onerror="this.src='https://via.placeholder.com/800x500/141824/ffffff?text=chamakito-2.jpg'">
+            <div class="img-wrapper" onclick="openModal('chamakito-2.jpg', '2. El Fantasma de la Bici FX')">
+                <img src="chamakito-2.jpg" alt="El Fantasma de la Bici FX" onerror="this.src='https://via.placeholder.com/800x500/141824/ffffff?text=chamakito-2.jpg'">
+                <span class="zoom-hint">🔍 VER COMPLETA</span>
             </div>
             <div class="card-body">
-                <div class="card-tag">FOTO #02</div>
-                <div class="description">INSERTAR DESCRIPCIONES</div>
+                <div class="card-tag">EXPEDIENTE #02</div>
+                <h2 class="card-title">El Fantasma de la Bici FX</h2>
+                <p class="description">
+                    Se cree el Anuel del barrio pero su máxima velocidad la alcanza picando la bicicleta sin frenos por la bajada del cerro. Lleva una cadena dorada que le dejó la piel verde de tanto usarla en verano, y se saca fotos de perfil tapándose la cara con la mano como si lo estuviera buscando la PDI, cuando en verdad la única que lo busca es la mamá para que vaya a tender la ropa.
+                </p>
             </div>
         </article>
 
         <!-- FOTO 3 -->
         <article class="photo-card">
-            <div class="img-wrapper">
-                <img src="chamakito-3.jpg" alt="Foto 3" onerror="this.src='https://via.placeholder.com/800x500/141824/ffffff?text=chamakito-3.jpg'">
+            <div class="img-wrapper" onclick="openModal('chamakito-3.jpg', '3. El Filósofo del Autotune')">
+                <img src="chamakito-3.jpg" alt="El Filósofo del Autotune" onerror="this.src='https://via.placeholder.com/800x500/141824/ffffff?text=chamakito-3.jpg'">
+                <span class="zoom-hint">🔍 VER COMPLETA</span>
             </div>
             <div class="card-body">
-                <div class="card-tag">FOTO #03</div>
-                <div class="description">INSERTAR DESCRIPCIONES</div>
+                <div class="card-tag">EXPEDIENTE #03</div>
+                <h2 class="card-title">El Filósofo del Autotune</h2>
+                <p class="description">
+                    Graba sus temas musicales metido en el closet de la casa usando los audífonos del celular. Cada vez que habla sobre la vida te mete una frase profunda como: "La calle está dura, entero vio, brrr", pero si se le cruza un perro quiltro corriendo sale arrancando y gritando como cabro chico. Su gran sueño es juntar plata para ponerse un diente de oro, pero por mientras se conforma con pegarse un papel de aluminio de los chocolates.
+                </p>
             </div>
         </article>
 
         <!-- FOTO 4 -->
         <article class="photo-card">
-            <div class="img-wrapper">
-                <img src="chamakito-4.jpg" alt="Foto 4" onerror="this.src='https://via.placeholder.com/800x500/141824/ffffff?text=chamakito-4.jpg'">
+            <div class="img-wrapper" onclick="openModal('chamakito-4.jpg', '4. El Terror de la Pobla en Año Nuevo')">
+                <img src="chamakito-4.jpg" alt="El Terror de la Pobla en Año Nuevo" onerror="this.src='https://via.placeholder.com/800x500/141824/ffffff?text=chamakito-4.jpg'">
+                <span class="zoom-hint">🔍 VER COMPLETA</span>
             </div>
             <div class="card-body">
-                <div class="card-tag">FOTO #04</div>
-                <div class="description">INSERTAR DESCRIPCIONES</div>
+                <div class="card-tag">EXPEDIENTE #04</div>
+                <h2 class="card-title">El Terror de la Pobla en Año Nuevo</h2>
+                <p class="description">
+                    Un loco que viste entero de buzo de marca dudosa y que no se saca el banano cruzado ni para bañarse (donde guarda un encendedor que no funciona, dos parches curitas y un chip prepago vencido). En las fiestas familiares es el primero en agarrar el micrófono del karaoke para tirar sus "¡Brrr!" a destiempo, logrando que hasta la abuela prefiera irse a acostar antes de las diez de la noche.
+                </p>
             </div>
         </article>
 
         <!-- FOTO 5 -->
         <article class="photo-card">
-            <div class="img-wrapper">
-                <img src="chamakito-5.jpg" alt="Foto 5" onerror="this.src='https://via.placeholder.com/800x500/141824/ffffff?text=chamakito-5.jpg'">
+            <div class="img-wrapper" onclick="openModal('chamakito-5.jpg', '5. El Rey del Combo Corte Italiano con Chorro de Ketchup')">
+                <img src="chamakito-5.jpg" alt="El Rey del Combo Corte Italiano" onerror="this.src='https://via.placeholder.com/800x500/141824/ffffff?text=chamakito-5.jpg'">
+                <span class="zoom-hint">🔍 VER COMPLETA</span>
             </div>
             <div class="card-body">
-                <div class="card-tag">FOTO #05</div>
-                <div class="description">INSERTAR DESCRIPCIONES</div>
+                <div class="card-tag">EXPEDIENTE #05</div>
+                <h2 class="card-title">El Rey del Combo "Corte Italiano con Chorro de Ketchup"</h2>
+                <p class="description">
+                    El Chamaquito Brr no entiende de cocina gourmet, él entiende de satisfacer el bajón a las 3 de la mañana. Te arma una pizza XL en dos minutos mientras te cuenta cómo va su próxima maqueta musical que grabó con el micrófono de un audífono Samsung. Te entrega la caja grasosa, se arregla las cejas marcadas con perfilador y te suelta: "Disfruta el queso, mi rey, que este corte no lo encontrás ni en la corte suprema, brrr".
+                </p>
             </div>
         </article>
 
     </main>
 
-    <!-- SECCIÓN DE VIDEO SHORT INTEGRADO -->
+    <!-- SECCIÓN DEL VIDEO DESTACADO -->
     <section class="video-section">
-        <h2>VIDEO DESTACADO</h2>
+        <h2>BONISSIMA LA BIRRE</h2>
         <div class="video-wrapper">
             <div class="video-container">
                 <iframe 
                     src="https://www.youtube.com/embed/CEVtgxTcq20" 
-                    title="Chamakito Video Short" 
+                    title="BONISSIMA LA BIRRE" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                     allowfullscreen>
                 </iframe>
@@ -331,12 +455,22 @@
         </div>
     </section>
 
+    <!-- VISOR MODAL EN PANTALLA COMPLETA -->
+    <div class="modal" id="imageModal" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <img id="modalImg" class="modal-img" src="" alt="Ampliación">
+            <div id="modalTitle" class="modal-title"></div>
+        </div>
+    </div>
+
     <footer>
         <p><strong>Chamakito Chile</strong> | Alojado en GitHub Pages 24/7</p>
     </footer>
 
-    <!-- SCRIPT DE ANIMACIONES SCROLL REVEAL -->
+    <!-- SCRIPTS DE INTERACTIVIDAD -->
     <script>
+        // Animaciones al hacer scroll
         const animatedElements = document.querySelectorAll('.photo-card, .video-section');
 
         const observer = new IntersectionObserver((entries) => {
@@ -346,10 +480,32 @@
                 }
             });
         }, {
-            threshold: 0.15
+            threshold: 0.12
         });
 
         animatedElements.forEach((el) => observer.observe(el));
+
+        // Funcionalidad Modal / Lightbox (Ver imagen completa sin cortes)
+        function openModal(imgSrc, titleText) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImg');
+            const modalTitle = document.getElementById('modalTitle');
+
+            modalImg.src = imgSrc;
+            modalTitle.innerText = titleText;
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        // Cerrar modal al presionar la tecla ESC
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
     </script>
 </body>
 </html>
