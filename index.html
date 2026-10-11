@@ -60,7 +60,6 @@
             gap: 10px;
         }
 
-        /* Estrella discreta de la bandera */
         .star-icon {
             color: var(--cl-blue);
             font-size: 1.4rem;
@@ -115,7 +114,6 @@
                         transform 0.7s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
-        /* Clase de animación que se activa al bajar */
         .photo-card.show {
             opacity: 1;
             transform: translateY(0);
@@ -169,7 +167,7 @@
             letter-spacing: 1px;
         }
 
-        /* SECCIÓN DE VIDEO AL FINAL */
+        /* SECCIÓN DE VIDEO SHORT AL FINAL */
         .video-section {
             max-width: 850px;
             margin: 20px auto 80px;
@@ -188,26 +186,37 @@
         .video-section h2 {
             font-size: 1.8rem;
             color: var(--cl-white);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             text-transform: uppercase;
         }
 
+        /* DISEÑO RESPONSIVO PARA YOUTUBE SHORTS (FORMATO VERTICAL 9:16) */
         .video-wrapper {
             position: relative;
-            width: 100%;
-            border-radius: 12px;
+            max-width: 360px; /* Ancho optimizado para el formato Short */
+            margin: 0 auto;
+            border-radius: 16px;
             overflow: hidden;
             border: 2px solid rgba(255, 255, 255, 0.1);
             border-bottom: 4px solid var(--cl-red);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
             background-color: #000;
         }
 
-        .video-wrapper video {
+        .video-container {
+            position: relative;
             width: 100%;
-            height: auto;
-            max-height: 480px;
-            display: block;
+            padding-bottom: 177.78%; /* Proporción vertical 9:16 */
+            height: 0;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
         }
 
         /* FOOTER */
@@ -230,6 +239,9 @@
             }
             .description {
                 font-size: 0.95rem;
+            }
+            .video-wrapper {
+                max-width: 100%; /* En móviles ocupa el ancho disponible */
             }
         }
     </style>
@@ -304,15 +316,18 @@
 
     </main>
 
-    <!-- SECCIÓN DE VIDEO AL FINAL -->
+    <!-- SECCIÓN DE VIDEO SHORT INTEGRADO -->
     <section class="video-section">
         <h2>VIDEO DESTACADO</h2>
         <div class="video-wrapper">
-            <!-- Reproductor de video local -->
-            <video controls poster="chamakito-1.jpg">
-                <source src="video-final.mp4" type="video/mp4">
-                Tu navegador no soporta la reproducción de video.
-            </video>
+            <div class="video-container">
+                <iframe 
+                    src="https://www.youtube.com/embed/CEVtgxTcq20" 
+                    title="Chamakito Video Short" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowfullscreen>
+                </iframe>
+            </div>
         </div>
     </section>
 
@@ -320,7 +335,7 @@
         <p><strong>Chamakito Chile</strong> | Alojado en GitHub Pages 24/7</p>
     </footer>
 
-    <!-- SCRIPT DE ANIMACIONES AL BAJAR (SCROLL REVEAL) -->
+    <!-- SCRIPT DE ANIMACIONES SCROLL REVEAL -->
     <script>
         const animatedElements = document.querySelectorAll('.photo-card, .video-section');
 
